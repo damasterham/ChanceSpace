@@ -12,6 +12,8 @@ using System.Diagnostics;
 
 namespace ChanceSpace
 {
+        //GitHub test
+    
     /// <summary>
     /// SqlHandler Version 1.0.0.0
     /// SqlHandler is a sql database query handler meant for an easy process of running sql commands.
