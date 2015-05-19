@@ -1,0 +1,6 @@
+C:\Users\59179\Documents\Visual Studio 2013\Projects\ChanceSpace\ChanceSpace\bin\Debug\ChanceSpace.dll.config
+C:\Users\59179\Documents\Visual Studio 2013\Projects\ChanceSpace\ChanceSpace\bin\Debug\ChanceSpace.dll
+C:\Users\59179\Documents\Visual Studio 2013\Projects\ChanceSpace\ChanceSpace\bin\Debug\ChanceSpace.pdb
+C:\Users\59179\Documents\Visual Studio 2013\Projects\ChanceSpace\ChanceSpace\obj\Debug\ChanceSpace.dll
+C:\Users\59179\Documents\Visual Studio 2013\Projects\ChanceSpace\ChanceSpace\obj\Debug\ChanceSpace.pdb
+C:\Users\59179\Documents\Visual Studio 2013\Projects\ChanceSpace\ChanceSpace\obj\Debug\ChanceSpace.csprojResolveAssemblyReference.cache
