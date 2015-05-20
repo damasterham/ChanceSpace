@@ -58,6 +58,7 @@
     <Compile Include="SqlDatabaseHandling\QueryConstructor.cs" />
     <Compile Include="SqlDatabaseHandling\SqlHandler.cs" />
     <Compile Include="SqlDatabaseHandling\Validation.cs" />
+    <Compile Include="User\UserLogic.cs" />
     <Compile Include="Utility\Utility.cs" />
     <Compile Include="WebShop\CartLogic.cs" />
     <Compile Include="WebShop\ProductLogic.cs" />

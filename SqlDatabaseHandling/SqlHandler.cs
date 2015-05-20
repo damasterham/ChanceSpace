@@ -128,10 +128,13 @@ namespace ChanceSpace
             repeater.DataSource = DataTable();
             repeater.DataBind();
         }
-        
+        public bool Read()
+        {
+            return this._reader.Read();
+        }
         #region Parameters
         #region Generic Add Methods
-        public void AddParameter(string value, string parameterName, SqlDbType sqlDbType)
+        public void AddParameter(object value, string parameterName, SqlDbType sqlDbType)
         {
             SqlParameter para = new SqlParameter();
             para.Value = value;
@@ -140,7 +143,7 @@ namespace ChanceSpace
             para.SqlDbType = sqlDbType;
             _command.Parameters.Add(para);
         }
-        public void AddParameter(string value, string parameterName, string sqlDbType)
+        public void AddParameter(object value, string parameterName, string sqlDbType)
         {
                 SqlDbType dataType = SqlDbType.Int;
                 switch (sqlDbType)
@@ -163,7 +166,7 @@ namespace ChanceSpace
                 }
                 AddParameter(value, parameterName, dataType);
         }
-        public void AddParameter(string value, string parameterName, SqlDbType sqlDbType, int length)
+        public void AddParameter(object value, string parameterName, SqlDbType sqlDbType, int length)
         {
             SqlParameter para = new SqlParameter();
             para.Value = value;
@@ -173,7 +176,7 @@ namespace ChanceSpace
             para.Size = length;
             _command.Parameters.Add(para);
         }
-        public void AddParameter(string value, string parameterName, string sqlDbType, int length)
+        public void AddParameter(object value, string parameterName, string sqlDbType, int length)
         {
                 SqlDbType dataType = SqlDbType.Int;
                 switch (sqlDbType)
