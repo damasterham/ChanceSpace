@@ -3,19 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
-// Database namespaces
-using System.Data.SqlClient;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Diagnostics;
 
 namespace ChanceSpace
-{
-        //GitHub test2
-    
+{    
     /// <summary>
-    /// SqlHandler Version 1.0.0.0
+    /// SqlHandler Version 1.0.0.1
     /// SqlHandler is a sql database query handler meant for an easy process of running sql commands.
     /// </summary>
     public class SqlHandler
@@ -26,11 +23,8 @@ namespace ChanceSpace
         private SqlConnection _connection;
         private SqlCommand _command;
         private SqlDataReader _reader;
-
-        //Debugin
         bool _open;
-        bool _paraError;
-
+        //Debugin
         #endregion _Fields_
 
         #region Constructors
@@ -58,9 +52,8 @@ namespace ChanceSpace
         public static string GlobalConnectionString { get { return _globalConnectionString; } set { _globalConnectionString = value; } }
         public string ConncetionString { get { return this._connectionString; } set { this._connectionString = value; } }
         public SqlConnection Conncetion { get { return this._connection; } set { this._connection = value; } }
-        public SqlConnection Command { get { return this._connection; } set { this._connection = value; } }
+        public SqlCommand Command { get { return this._command; } set { this._command = value; } }
         public SqlDataReader Reader { get { return this._reader; } set { this._reader = value; } }
-
         public string QueryString
         {
             get { return _command.CommandText; }
@@ -71,9 +64,6 @@ namespace ChanceSpace
             get { return _command.CommandText; }
             set { this._command.CommandType = CommandType.StoredProcedure; this._command.CommandText = value; }
         }
-       
-
-
         #endregion _Properties_
 
         #region Methods
@@ -150,6 +140,29 @@ namespace ChanceSpace
             para.SqlDbType = sqlDbType;
             _command.Parameters.Add(para);
         }
+        public void AddParameter(string value, string parameterName, string sqlDbType)
+        {
+                SqlDbType dataType = SqlDbType.Int;
+                switch (sqlDbType)
+                {
+                    case "int":
+                        dataType = SqlDbType.Int;
+                        break;
+                    case "nvarchar":
+                        dataType = SqlDbType.NVarChar;
+                        break;
+                    case "ntext":
+                        dataType = SqlDbType.NText;
+                        break;
+                    case "datetime":
+                        dataType = SqlDbType.DateTime;
+                        break;
+                    case "bit":
+                        dataType = SqlDbType.Bit;
+                        break;
+                }
+                AddParameter(value, parameterName, dataType);
+        }
         public void AddParameter(string value, string parameterName, SqlDbType sqlDbType, int length)
         {
             SqlParameter para = new SqlParameter();
@@ -160,11 +173,8 @@ namespace ChanceSpace
             para.Size = length;
             _command.Parameters.Add(para);
         }
-    
         public void AddParameter(string value, string parameterName, string sqlDbType, int length)
         {
-            if (value != null && value != "")
-            {
                 SqlDbType dataType = SqlDbType.Int;
                 switch (sqlDbType)
                 {
@@ -185,27 +195,18 @@ namespace ChanceSpace
                         break;
                 }
                 AddParameter(value, parameterName, dataType, length);
-            }
-            else
-            {
-                _paraError = true;
-            }
-
         }
-        // public void AddDate(DateTime date, string sqlpara) { _command.Parameters.Add(date.ToString(), SqlDbType.DateTime, 0, sqlpara); }
         #endregion _Generic Add Methods_
         #region Custom Add Methods
         public void AddId(string value)
         {
             AddParameter(value, "@id", SqlDbType.Int);
         }
-        public void AddNVarChar50(string value, string parameterName)
-        {
-            AddParameter(value, "@id", SqlDbType.Int);
-        }
-        
+        //public void AddNVarChar50(string value, string parameterName)
+        //{
+        //    AddParameter(value, "@id", SqlDbType.Int);
+        //} 
         #endregion _Custom Add Methods_
-
         #endregion _Parameters_
 
         #endregion _Methods_

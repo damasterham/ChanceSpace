@@ -53,10 +53,10 @@
     <Compile Include="SqlDatabaseHandling\CrudLogic.cs" />
     <Compile Include="SqlDatabaseHandling\LoginLogic.cs" />
     <Compile Include="SqlDatabaseHandling\LoginLogic-ex.cs" />
-    <Compile Include="SqlDatabaseHandling\MsSqlDbHandler.cs" />
     <Compile Include="SqlDatabaseHandling\MultiMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlDatabaseHandling\QueryConstructor.cs" />
+    <Compile Include="SqlDatabaseHandling\SqlHandler.cs" />
     <Compile Include="SqlDatabaseHandling\Validation.cs" />
     <Compile Include="Utility\Utility.cs" />
     <Compile Include="WebShop\CartLogic.cs" />

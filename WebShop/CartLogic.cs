@@ -15,7 +15,6 @@ namespace ChanceSpace.WebShop
     {
         #region Fields
         private List<Product> _products; // The only thing that is either set by session or by new;
-
         private HttpContext _context = HttpContext.Current;
         private HttpSessionState _sesh;
         private string _seshName;
