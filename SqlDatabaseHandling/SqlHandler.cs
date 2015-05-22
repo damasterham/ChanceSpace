@@ -12,7 +12,7 @@ using System.Diagnostics;
 namespace ChanceSpace
 {    
     /// <summary>
-    /// SqlHandler Version 1.0.0.1
+    /// SqlHandler Version 1.0.2.0
     /// SqlHandler is a sql database query handler meant for an easy process of running sql commands.
     /// </summary>
     public class SqlHandler
@@ -24,12 +24,11 @@ namespace ChanceSpace
         private SqlCommand _command;
         private SqlDataReader _reader;
         bool _open;
-        //Debugin
         #endregion _Fields_
 
         #region Constructors
         /// <summary>
-        /// Sets the SqlHandler's ConnectionString with the Value of GlobalConnectionString (Default value="DbConnectionString") 
+        /// Sets the SqlHandler's ConnectionString with the value of GlobalConnectionString (Default value="DbConnectionString") 
         /// and initializes the Connenction and Command properties.
         /// </summary>
         public SqlHandler() : this(_globalConnectionString){ }
@@ -49,16 +48,38 @@ namespace ChanceSpace
         #endregion _Constructors_
 
         #region Properties
+        /// <summary>
+        /// Get or Set the GlobalConnectionString, a static ConnectionString that is Global for all SqlHandlers on the page.
+        /// It is the default value of ConnectionString if other is not aplied via Constructor or ConnectionString Property.
+        /// </summary>
         public static string GlobalConnectionString { get { return _globalConnectionString; } set { _globalConnectionString = value; } }
+        /// <summary>
+        /// Get or Set the ConnectionString that connects to the database. Must correspond a connectionstring in webconfig.
+        /// </summary>
         public string ConncetionString { get { return this._connectionString; } set { this._connectionString = value; } }
-        public SqlConnection Conncetion { get { return this._connection; } set { this._connection = value; } }
+        /// <summary>
+        /// Get or Set the SqlConnection;
+        /// </summary>
+        public SqlConnection Connection { get { return this._connection; } set { this._connection = value; } }
+        /// <summary>
+        /// Get or Set the SqlCommand
+        /// </summary>
         public SqlCommand Command { get { return this._command; } set { this._command = value; } }
+        /// <summary>
+        /// Get or Set the SqlDataReader
+        /// </summary>
         public SqlDataReader Reader { get { return this._reader; } set { this._reader = value; } }
+        /// <summary>
+        /// Get the CommandText or Set the CommandText and CommandType to Text.
+        /// </summary>
         public string QueryString
         {
             get { return _command.CommandText; }
             set { this._command.CommandType = CommandType.Text; this._command.CommandText = value; }
         }
+        /// <summary>
+        /// Get the CommandText or Set the CommandText and CommandType to StoredProcedure.
+        /// </summary>
         public string StoredProcedure
         {
             get { return _command.CommandText; }
@@ -103,13 +124,13 @@ namespace ChanceSpace
             adap.Fill(dt);
             return dt;
         }
-        public DataTable DataTable(DataTable newDt)
-        {
-            DataTable dt = newDt;
-            SqlDataAdapter adap = new SqlDataAdapter(_command);
-            adap.Fill(dt);
-            return dt;
-        }        
+        //public DataTable DataTable(DataTable newDt)
+        //{
+        //    DataTable dt = newDt;
+        //    SqlDataAdapter adap = new SqlDataAdapter(_command);
+        //    adap.Fill(dt);
+        //    return dt;
+        //}        
         /// <summary>
         /// Binds selected data to a GridView
         /// </summary>
@@ -128,12 +149,23 @@ namespace ChanceSpace
             repeater.DataSource = DataTable();
             repeater.DataBind();
         }
+        /// <summary>
+        /// Advances the SqlDataReader to the next record
+        /// </summary>
+        /// <returns>True if a row has been read</returns>
         public bool Read()
         {
             return this._reader.Read();
         }
+
         #region Parameters
         #region Generic Add Methods
+        /// <summary>
+        /// Adds a Parameter to Commands SqlParameterCollection
+        /// </summary>
+        /// <param name="value">The value of the parameter</param>
+        /// <param name="parameterName">The name of the parameter</param>
+        /// <param name="sqlDbType">The SqlDbType of the parameter</param>
         public void AddParameter(object value, string parameterName, SqlDbType sqlDbType)
         {
             SqlParameter para = new SqlParameter();
@@ -143,6 +175,12 @@ namespace ChanceSpace
             para.SqlDbType = sqlDbType;
             _command.Parameters.Add(para);
         }
+        /// <summary>
+        /// Adds a Parameter to Commands SqlParameterCollection
+        /// </summary>
+        /// <param name="value">The value of the parameter</param>
+        /// <param name="parameterName">The name of the parameter</param>
+        /// <param name="sqlDbType">The string name of a SqlDbType of the parameter</param>
         public void AddParameter(object value, string parameterName, string sqlDbType)
         {
                 SqlDbType dataType = SqlDbType.Int;
@@ -166,6 +204,13 @@ namespace ChanceSpace
                 }
                 AddParameter(value, parameterName, dataType);
         }
+        /// <summary>
+        /// Adds a Parameter to Commands SqlParameterCollection
+        /// </summary>
+        /// <param name="value">The value of the parameter</param>
+        /// <param name="parameterName">The name of the parameter</param>
+        /// <param name="sqlDbType">The SqlDbType of the parameter</param>
+        /// <param name="length">The length of the parameter</param>
         public void AddParameter(object value, string parameterName, SqlDbType sqlDbType, int length)
         {
             SqlParameter para = new SqlParameter();
@@ -176,6 +221,14 @@ namespace ChanceSpace
             para.Size = length;
             _command.Parameters.Add(para);
         }
+        /// <summary>
+        /// Adds a Parameter to Commands SqlParameterCollection
+        /// </summary>
+        /// <param name="value">The value of the parameter</param>
+        /// <param name="parameterName">The name of the parameter</param>
+        /// <param name="sqlDbType">The string name of a SqlDbType of the parameter</param>
+        /// <param name="length">The length of the parameter</param>
+
         public void AddParameter(object value, string parameterName, string sqlDbType, int length)
         {
                 SqlDbType dataType = SqlDbType.Int;
@@ -213,6 +266,16 @@ namespace ChanceSpace
         #endregion _Parameters_
 
         #endregion _Methods_
+
+
+        //public SpecificParameter AddSpecificParameter { get; set; }
+        //public class SpecificParameter : SqlHandler
+        //{
+        //    public void NVarChar50(string value, string parameterName)
+        //    {
+        //        AddParameter(value, parameterName, SqlDbType.NVarChar, 50);
+        //    }
+        //}
 
     }
 }
