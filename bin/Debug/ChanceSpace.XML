@@ -1,0 +1,282 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ChanceSpace</name>
+    </assembly>
+    <members>
+        <member name="T:ChanceSpace.Crud">
+            <summary>
+            CRUD Version 1.1.0.3
+            Crud is a sql database query handler meant for an easy process of running sql commands.
+            When using Crud start by setting the DbConfig class's Connection string in the beginning of your page, as this is needed for the Crud class to function.
+            </summary>
+        </member>
+        <member name="M:ChanceSpace.Crud.#ctor">
+            <summary>
+            Defualt Constructor. Uses the static ConnectionString.
+            </summary>
+        </member>
+        <member name="M:ChanceSpace.Crud.#ctor(System.String)">
+            <summary>
+            ConnectionString Constructor. Add a custom connection string to use insted of the static ConnectionString.
+            </summary>
+            <param name="connectionString">The connection string to your database</param>
+        </member>
+        <member name="M:ChanceSpace.Crud.#ctor(System.String,System.String)">
+            <summary>
+            Id constructor. Creates an instance of Crud with an id parameter. Used for specific sql commands.
+            </summary>
+            <param name="id">The specific id you want to use for sql commands</param>
+            <param name="sqlParameter">The id's sql parameter, defaulted to "id"</param>
+        </member>
+        <member name="M:ChanceSpace.Crud.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Id constructor with custom connection string. Creates an instance of Crud with an id paramater and a custom connection string. Used for specific sql commands.
+            </summary>
+            <param name="connectionString">The custom connection string</param>
+            <param name="id">The specific id you want to use for sql commands</param>
+            <param name="sqlParameter">The id's sql parameter, defaulted to "id"</param>
+        </member>
+        <member name="M:ChanceSpace.Crud.AddParameter(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            Adds a parameter to the list of sql parameters
+            </summary>
+            <param name="value">The value you want to store in a database</param>
+            <param name="sqlpara">The parameter name used in your sql command. Example "@id". The @ is not needed</param>
+            <param name="sqltype">The data type used in your sql command. Can be: Int, nvarchar, ntext, datetime and bit</param>
+            <param name="length">The length of you value. Only needed if the datatypes requires you to define length</param>
+        </member>
+        <member name="M:ChanceSpace.Crud.CmdType">
+            <summary>
+            Checks which type of sql command shall be done. 
+            </summary>
+        </member>
+        <member name="M:ChanceSpace.Crud.BindTo(System.Web.UI.WebControls.GridView)">
+            <summary>
+            Binds selected data to a gridview
+            </summary>
+            <param name="gridView">The gridview you want to bind data to</param>
+        </member>
+        <member name="M:ChanceSpace.Crud.BindTo(System.Web.UI.WebControls.Repeater)">
+            <summary>
+            Binds selected data to a repeater
+            </summary>
+            <param name="repeater">The repeater you want to bind data to</param>
+        </member>
+        <member name="M:ChanceSpace.Crud.Execute">
+            <summary>
+            Execute a sql non-query. Used for Create-, Delete- and Update sql commands.
+            </summary>
+        </member>
+        <member name="M:ChanceSpace.Crud.ReadToDataSet">
+            <summary>
+            Reads selected data to the Data property. Used for Select sql commands.
+            </summary>
+        </member>
+        <member name="P:ChanceSpace.Crud.ConnectionString">
+            <summary>
+            The connection string to your database. The default value is "DatabaseConnectionString". Setting this sets all the connection strings for all Crud objects
+            </summary>
+        </member>
+        <member name="P:ChanceSpace.Crud.DataSet">
+            <summary>
+            Get Dataset. Used for databinding to data controls, such as gridviews.
+            </summary>
+        </member>
+        <member name="P:ChanceSpace.Crud.DataTable">
+            <summary>
+            Get DataTable. Used for databinding to data controls, such as gridviews.
+            </summary>
+        </member>
+        <member name="P:ChanceSpace.Crud.Rdr">
+            <summary>
+            Get the SqlDataReader to gain direct access to a dictionary of your sql request.
+            </summary>
+        </member>
+        <member name="P:ChanceSpace.Crud.QueryString">
+            <summary>
+            Sets the query string of the instance. Setting the QueryString Property will nullify the StoredProcedure Property and toggle what type of query will be used.
+            </summary>
+        </member>
+        <member name="P:ChanceSpace.Crud.StoredProcedure">
+            <summary>
+            Sets the stored procedure of the instance. Setting the StoedProcedure Property will nullify the QueryString Property and toggle what type of query will be used.
+            </summary>
+        </member>
+        <member name="T:ChanceSpace.SqlHandler">
+            <summary>
+            SqlHandler Version 1.0.0.1
+            SqlHandler is a sql database query handler meant for an easy process of running sql commands.
+            </summary>
+        </member>
+        <member name="M:ChanceSpace.SqlHandler.#ctor">
+            <summary>
+            Sets the SqlHandler's ConnectionString with the value of GlobalConnectionString (Default value="DbConnectionString") 
+            and initializes the Connenction and Command properties.
+            </summary>
+        </member>
+        <member name="M:ChanceSpace.SqlHandler.#ctor(System.String)">
+            <summary>
+            Sets the SqlHandler's ConnectionString
+            and initializes the Connenction and Command properties
+            </summary>
+            <param name="connectionString">The Connection String used to acces your Database. (Remmember to check your WebConfig)</param>
+        </member>
+        <member name="M:ChanceSpace.SqlHandler.Open">
+            <summary>
+            Opens the connection to your database.
+            </summary>
+        </member>
+        <member name="M:ChanceSpace.SqlHandler.Close">
+            <summary>
+            Closes the connection to your database.
+            </summary>
+        </member>
+        <member name="M:ChanceSpace.SqlHandler.ExecuteNonQuery">
+            <summary>
+            Executes A NonQuery, Create, Update, Delete.
+            </summary>
+        </member>
+        <member name="M:ChanceSpace.SqlHandler.ExecuteReader">
+            <summary>
+            Executes a reader Stored in the Reader Property. Needs an open connection to function. Use Open() to open the connection and Close() to close it when you are done using the Reader Property.
+            </summary>
+        </member>
+        <member name="M:ChanceSpace.SqlHandler.DataTable">
+            <summary>
+            Returns a DataTable with selected data.
+            </summary>
+            <returns>Selected query data</returns>
+        </member>
+        <member name="M:ChanceSpace.SqlHandler.BindTo(System.Web.UI.WebControls.GridView)">
+            <summary>
+            Binds selected data to a GridView
+            </summary>
+            <param name="repeater">The GridView you want to bind data to</param>
+        </member>
+        <member name="M:ChanceSpace.SqlHandler.BindTo(System.Web.UI.WebControls.Repeater)">
+            <summary>
+            Binds selected data to a Repeater
+            </summary>
+            <param name="repeater">The Repeater you want to bind data to</param>
+        </member>
+        <member name="M:ChanceSpace.SqlHandler.Read">
+            <summary>
+            Advances the SqlDataReader to the next record
+            </summary>
+            <returns>True if a row has been read</returns>
+        </member>
+        <member name="M:ChanceSpace.SqlHandler.AddParameter(System.Object,System.String,System.Data.SqlDbType)">
+            <summary>
+            Adds a Parameter to Commands SqlParameterCollection
+            </summary>
+            <param name="value">The value of the parameter</param>
+            <param name="parameterName">The name of the parameter</param>
+            <param name="sqlDbType">The SqlDbType of the parameter</param>
+        </member>
+        <member name="M:ChanceSpace.SqlHandler.AddParameter(System.Object,System.String,System.String)">
+            <summary>
+            Adds a Parameter to Commands SqlParameterCollection
+            </summary>
+            <param name="value">The value of the parameter</param>
+            <param name="parameterName">The name of the parameter</param>
+            <param name="sqlDbType">The string name of a SqlDbType of the parameter</param>
+        </member>
+        <member name="M:ChanceSpace.SqlHandler.AddParameter(System.Object,System.String,System.Data.SqlDbType,System.Int32)">
+            <summary>
+            Adds a Parameter to Commands SqlParameterCollection
+            </summary>
+            <param name="value">The value of the parameter</param>
+            <param name="parameterName">The name of the parameter</param>
+            <param name="sqlDbType">The SqlDbType of the parameter</param>
+            <param name="length">The length of the parameter</param>
+        </member>
+        <member name="M:ChanceSpace.SqlHandler.AddParameter(System.Object,System.String,System.String,System.Int32)">
+            <summary>
+            Adds a Parameter to Commands SqlParameterCollection
+            </summary>
+            <param name="value">The value of the parameter</param>
+            <param name="parameterName">The name of the parameter</param>
+            <param name="sqlDbType">The string name of a SqlDbType of the parameter</param>
+            <param name="length">The length of the parameter</param>
+        </member>
+        <member name="P:ChanceSpace.SqlHandler.GlobalConnectionString">
+            <summary>
+            Get or Set the GlobalConnectionString, a static ConnectionString that is Global for all SqlHandlers on the page.
+            It is the default value of ConnectionString if other is not aplied via Constructor or ConnectionString Property.
+            </summary>
+        </member>
+        <member name="P:ChanceSpace.SqlHandler.ConncetionString">
+            <summary>
+            Get or Set the ConnectionString that connects to the database. Must correspond a connectionstring in webconfig.
+            </summary>
+        </member>
+        <member name="P:ChanceSpace.SqlHandler.Connection">
+            <summary>
+            Get or Set the SqlConnection;
+            </summary>
+        </member>
+        <member name="P:ChanceSpace.SqlHandler.Command">
+            <summary>
+            Get or Set the SqlCommand
+            </summary>
+        </member>
+        <member name="P:ChanceSpace.SqlHandler.Reader">
+            <summary>
+            Get or Set the SqlDataReader
+            </summary>
+        </member>
+        <member name="P:ChanceSpace.SqlHandler.QueryString">
+            <summary>
+            Get the CommandText or Set the CommandText and CommandType to Text.
+            </summary>
+        </member>
+        <member name="P:ChanceSpace.SqlHandler.StoredProcedure">
+            <summary>
+            Get the CommandText or Set the CommandText and CommandType to StoredProcedure.
+            </summary>
+        </member>
+        <member name="T:Vali">
+            <summary>
+            Validation Version 1.01
+            </summary>
+        </member>
+        <member name="T:ChanceSpace.Utility">
+            <summary>
+            A static Utility Class for various web utility and shortcuts
+            </summary>
+        </member>
+        <member name="M:ChanceSpace.Utility.ReloadPage(System.Web.UI.Page)">
+             <summary>
+            Reloads the page. Redirects you to the RawUrl of the current page.
+             </summary>
+             <param name="page">The aspx page you want to reload/redirect to</param>
+        </member>
+        <member name="M:ChanceSpace.WebShop.Cart.Add(ChanceSpace.WebShop.Product)">
+            <summary>
+            Adds a new Product to the cart or adds the amount to an already existing Product
+            </summary>
+            <param name="item">The Product added to the Cart</param>
+        </member>
+        <member name="M:ChanceSpace.WebShop.Cart.Remove(ChanceSpace.WebShop.Product)">
+            <summary>
+            Removes all of this type of Product
+            </summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:ChanceSpace.WebShop.Cart.UpdateSession">
+            <summary>
+            Updates the session that Cart uses, so i can be saved across page refreshes and postbacks
+            </summary>
+        </member>
+        <member name="M:ChanceSpace.WebShop.Product.#ctor(System.Int32,System.String,System.Single,System.Int32)">
+            <summary>
+            Default cart constructor
+            </summary>
+            <param name="id">The product's id</param>
+            <param name="name">The product's name</param>
+            <param name="price">The product's price</param>
+            <param name="amount">The amount of this product</param>
+        </member>
+    </members>
+</doc>

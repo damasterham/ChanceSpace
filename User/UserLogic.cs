@@ -1,96 +1,109 @@
-﻿//using System;
+﻿//using System.Web;
 //using System.Collections.Generic;
-//using System.Linq;
-//using System.Web;
 //using System.Web.SessionState;
-//using System.Diagnostics;
 
-//namespace ChanceSpace
+//namespace ChanceSpace.WebUser
 //{
 //    /// <summary>
 //    /// LoginLogic Version 1.02
-//    /// </summary>
-//    namespace LoginLogic
+//    /// </summary
+//    public class WebUser
 //    {
-//        public class SimpleUser
+//        #region Fields
+//        private SqlHandler _handler;
+//        private string _loginId;
+//        private string _pass;
+
+//        private string _name;
+//        private string _fname;
+//        private string _lname;
+//        private string _id;
+//        private string _role;
+
+//        private Dictionary<string, string> _columnName = new Dictionary<string, string> 
 //        {
-//            #region Fields
-//            private string _fname;
-//            private string _lname;
-//            private string _user;
-//            private string _id;
-//            private string _role;
-//            Crud login;
-//            private HttpContext _context = HttpContext.Current;
-//            private HttpSessionState _sesh;
-//            private string _seshName;
-//            #endregion _Fields_
-
-//            #region Constructors
-//            public SimpleUser() : this("DbConnectionString", "Login") { }
-//            public SimpleUser(string connectionString, string storedProcedure, string session = "user")
-//            {
-//                Crud.ConnectionString = connectionString;
-//                login = new Crud();
-//                login.StoredProcedure = storedProcedure;
-//            }
-//            #endregion _Constructors_
-
-//            #region Properties
-//            public string FirstName { get { return this._fname; } set { this._fname = value; } }
-//            public string LastName { get { return this._lname; } set { this._lname = value; } }
-//            public string FullName { get { return this._fname + " " + this._lname; } }
-//            public string UserName { get { return this._user; } set { this._user = value; } }
-//            public string Id { get { return this._id; } set { this._id = value; } }
-//            public string Role { get { return this._role; } set { this._role = value; } }
-//            #endregion _Properties_
-
-//            #region Methods
-//            public void Login(string user, string pass)
-//            {
-//                login.AddParameter(user, "name", "nvarchar", 50);
-//                login.AddParameter(pass, "pass", "nvarchar", 50);
-//            }
-//            //public void Login(string user, string pass, string userPara, string passPara)
-//            //{
-//            //    login.AddParameter(user, userPara, "nvarchar", 50);
-//            //    login.AddParameter(pass, passPara, "nvarchar", 50);
-//            //}
-//            //public void Login(string user, string pass, string userPara, string passPara, string sqlType)
-//            //{
-//            //    login.AddParameter(user, userPara, sqlType, 50);
-//            //    login.AddParameter(pass, passPara, sqlType, 50);
-//            //}
-//            //public void Login(string user, string pass, string userPara, string passPara, int length)
-//            //{
-//            //    login.AddParameter(user, userPara, "nvarchar", 50);
-//            //    login.AddParameter(pass, passPara, "nvarchar", 50);
-//            //}
-//            //public void Login(string user, string pass, string userPara, string passPara, string userSqlType, string passSqlType, int userLength = 50, int passLength = 50)
-//            //{
-//            //    login.AddParameter(user, userPara, userSqlType, userLength);
-//            //    login.AddParameter(pass, passPara, passSqlType, passLength);
-//            //}
-//            //private void Start()
-//            //{
-//            //    Debug.WriteLine("Login");
-//            //}
-//            private void Read()
-//            {
-//                login.Open();
-//                login.ReadRow();
-//                login.Close();
-
-//                if (login.Row["id"] != null) this.Id = login.Row["id"];
-//                if (login.Row["name"] != null) this.UserName = login.Row["name"];
-//                if (login.Row["firstName"] != null) this.FirstName = login.Row["firstName"];
-//                if (login.Row["lastName"] != null) this.LastName = login.Row["lastName"];
+//            {"loginId", "name"},
+//            {"pass", "pass" },
+//            {"role", "fkRole"},
+//            {"firstName", "firstName"},
+//            {"lastName", "lastName"},
+//            {"email", "email"},
+//            {"address", "address"},
+//            {"date", "date"},
+//            {"image", "fkImage"}
+//        };
+        
 
 
+//        private HttpContext _context = HttpContext.Current;
+//        private HttpSessionState _sesh;
+//        private string _seshName;
+//        #endregion _Fields_
 
-//            }
-//            #endregion _Methods_
+//        #region Constructors
+//        //public SimpleUser() : this("DbConnectionString", "Login") { }
+//        //public SimpleUser(string connectionString, string storedProcedure, string session = "user")
+//        //{
+//        //    Crud.ConnectionString = connectionString;
+//        //    login = new Crud();
+//        //    login.StoredProcedure = storedProcedure;
+//        //}
+//        #endregion _Constructors_
+
+//        #region Properties
+//        public string FirstName { get { return this._fname; } set { this._fname = value; } }
+//        public string LastName { get { return this._lname; } set { this._lname = value; } }
+//        public string FullName { get { return this._fname + " " + this._lname; } }
+//        public string UserName { get { return this._user; } set { this._user = value; } }
+//        public string Id { get { return this._id; } set { this._id = value; } }
+//        public string Role { get { return this._role; } set { this._role = value; } }
+//        #endregion _Properties_
+
+//        #region Methods
+//        public void Login(string user, string pass)
+//        {
+//            login.AddParameter(user, "name", "nvarchar", 50);
+//            login.AddParameter(pass, "pass", "nvarchar", 50);
 //        }
+//        //public void Login(string user, string pass, string userPara, string passPara)
+//        //{
+//        //    login.AddParameter(user, userPara, "nvarchar", 50);
+//        //    login.AddParameter(pass, passPara, "nvarchar", 50);
+//        //}
+//        //public void Login(string user, string pass, string userPara, string passPara, string sqlType)
+//        //{
+//        //    login.AddParameter(user, userPara, sqlType, 50);
+//        //    login.AddParameter(pass, passPara, sqlType, 50);
+//        //}
+//        //public void Login(string user, string pass, string userPara, string passPara, int length)
+//        //{
+//        //    login.AddParameter(user, userPara, "nvarchar", 50);
+//        //    login.AddParameter(pass, passPara, "nvarchar", 50);
+//        //}
+//        //public void Login(string user, string pass, string userPara, string passPara, string userSqlType, string passSqlType, int userLength = 50, int passLength = 50)
+//        //{
+//        //    login.AddParameter(user, userPara, userSqlType, userLength);
+//        //    login.AddParameter(pass, passPara, passSqlType, passLength);
+//        //}
+//        //private void Start()
+//        //{
+//        //    Debug.WriteLine("Login");
+//        //}
+//        private void Read()
+//        {
+//            login.Open();
+//            login.ReadRow();
+//            login.Close();
+
+//            if (login.Row["id"] != null) this.Id = login.Row["id"];
+//            if (login.Row["name"] != null) this.UserName = login.Row["name"];
+//            if (login.Row["firstName"] != null) this.FirstName = login.Row["firstName"];
+//            if (login.Row["lastName"] != null) this.LastName = login.Row["lastName"];
+
+
+
+//        }
+//        #endregion _Methods_
 //    }
 //}
 
