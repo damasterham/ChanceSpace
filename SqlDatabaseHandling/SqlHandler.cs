@@ -12,7 +12,7 @@ using System.Diagnostics;
 namespace ChanceSpace
 {    
     /// <summary>
-    /// SqlHandler Version 1.0.0.1
+    /// SqlHandler Version 1.0.0.3
     /// SqlHandler is a sql database query handler meant for an easy process of running sql commands.
     /// </summary>
     public class SqlHandler
@@ -131,7 +131,7 @@ namespace ChanceSpace
         
         #region Parameters
         #region Generic Add Methods
-        public void AddParameter(string value, string parameterName, SqlDbType sqlDbType)
+        public void AddParameter(object value, string parameterName, SqlDbType sqlDbType)
         {
             SqlParameter para = new SqlParameter();
             para.Value = value;
@@ -140,61 +140,62 @@ namespace ChanceSpace
             para.SqlDbType = sqlDbType;
             _command.Parameters.Add(para);
         }
-        public void AddParameter(string value, string parameterName, string sqlDbType)
+        public void AddParameter(object value, string parameterName, string sqlDbType)
         {
-                SqlDbType dataType = SqlDbType.Int;
-                switch (sqlDbType)
-                {
-                    case "int":
-                        dataType = SqlDbType.Int;
-                        break;
-                    case "nvarchar":
-                        dataType = SqlDbType.NVarChar;
-                        break;
-                    case "ntext":
-                        dataType = SqlDbType.NText;
-                        break;
-                    case "datetime":
-                        dataType = SqlDbType.DateTime;
-                        break;
-                    case "bit":
-                        dataType = SqlDbType.Bit;
-                        break;
-                }
-                AddParameter(value, parameterName, dataType);
+            SqlDbType dataType = SetDataType(sqlDbType);
+            AddParameter(value, parameterName, dataType);
         }
-        public void AddParameter(string value, string parameterName, SqlDbType sqlDbType, int length)
+        public void AddParameter(object value, string parameterName, SqlDbType sqlDbType, int length)
         {
             SqlParameter para = new SqlParameter();
             para.Value = value;
-            if (parameterName.Substring(0, 1) == "@") para.ParameterName = parameterName;
-            else para.ParameterName = "@" + parameterName;
+            para.ParameterName = ParameterSubstring(parameterName);
             para.SqlDbType = sqlDbType;
             para.Size = length;
             _command.Parameters.Add(para);
         }
-        public void AddParameter(string value, string parameterName, string sqlDbType, int length)
+        public void AddParameter(object value, string parameterName, string sqlDbType, int length)
         {
-                SqlDbType dataType = SqlDbType.Int;
-                switch (sqlDbType)
-                {
-                    case "int":
-                        dataType = SqlDbType.Int;
-                        break;
-                    case "nvarchar":
-                        dataType = SqlDbType.NVarChar;
-                        break;
-                    case "ntext":
-                        dataType = SqlDbType.NText;
-                        break;
-                    case "datetime":
-                        dataType = SqlDbType.DateTime;
-                        break;
-                    case "bit":
-                        dataType = SqlDbType.Bit;
-                        break;
-                }
-                AddParameter(value, parameterName, dataType, length);
+            SqlDbType dataType = SetDataType(sqlDbType);
+            AddParameter(value, parameterName, dataType, length);
+        }
+
+        private SqlDbType SetDataType(string sqlDbType)
+        {
+            SqlDbType dataType = SqlDbType.Int;
+            switch (sqlDbType)
+            {
+                case "int":
+                    dataType = SqlDbType.Int;
+                    break;
+                case "nvarchar":
+                    dataType = SqlDbType.NVarChar;
+                    break;
+                case "ntext":
+                    dataType = SqlDbType.NText;
+                    break;
+                case "datetime":
+                    dataType = SqlDbType.DateTime;
+                    break;
+                case "bit":
+                    dataType = SqlDbType.Bit;
+                    break;
+                case "varchar":
+                    dataType = SqlDbType.VarChar;
+                    break;
+                case "text":
+                    dataType = SqlDbType.Text;
+                    break;
+                case "guid":
+                    dataType = SqlDbType.UniqueIdentifier;
+                    break;
+            }
+            return dataType;
+        }
+        private string ParameterSubstring(string parameterName)
+        {
+            if (parameterName.Substring(0, 1) == "@") return parameterName;
+            else return "@" + parameterName;
         }
         #endregion _Generic Add Methods_
         #region Custom Add Methods
