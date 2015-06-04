@@ -12,7 +12,7 @@ using System.Diagnostics;
 namespace ChanceSpace
 {    
     /// <summary>
-    /// SqlHandler Version 1.0.0.3
+    /// SqlHandler Version 1.0.0.4
     /// SqlHandler is a sql database query handler meant for an easy process of running sql commands.
     /// </summary>
     public class SqlHandler
@@ -78,15 +78,17 @@ namespace ChanceSpace
         /// <summary>
         /// Executes A NonQuery, Create, Update, Delete.
         /// </summary>
-        public void ExecuteNonQuery()
+        public int ExecuteNonQuery()
         {
-            if (_open) _command.ExecuteNonQuery();
+            int rows = 0;
+            if (_open) rows = _command.ExecuteNonQuery();
             else
             {
                 _connection.Open();
-                _command.ExecuteNonQuery();
+                rows = _command.ExecuteNonQuery();
                 _connection.Close();
             }
+            return rows;
         }
         /// <summary>
         /// Executes a reader Stored in the Reader Property. Needs an open connection to function. Use Open() to open the connection and Close() to close it when you are done using the Reader Property.
