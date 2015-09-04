@@ -5,6 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
+using System.Security.Cryptography;
+using System.Web.Security;
+using System.Collections;
+using System.Data.SqlClient;
+
+
 
 namespace ChanceSpace
 {
@@ -20,6 +26,56 @@ namespace ChanceSpace
         public static void ReloadPage(Page page)
         {
             page.Response.Redirect(page.Request.RawUrl);
+        }
+        public static void ReloadPage()
+        {
+            HttpContext.Current.Response.Redirect(HttpContext.Current.Request.RawUrl);
+        }
+        public static string TextEndRemoval(string text, int stepsBackInText, int deleteCount)
+        {
+            return text.Remove(text.Length - stepsBackInText, deleteCount);
+        }
+        public static string NumerateString(string text)
+        {
+            string str = "";
+            int i = 0;
+            foreach (char ch in text)
+            {
+                i++;
+                str += i + ": " + ch + "<br/>";
+            }
+            return str;
+        }
+        public static string NewSimpleSalt()
+        {
+            return Guid.NewGuid().ToString();
+        }
+        public static string Hash(string password, string salt)
+
+        {
+            string str = "";
+            string str2 = "";
+
+            int i = 0;
+            using(SHA256 hash = SHA256Managed.Create())
+            {
+                Encoding enc = Encoding.UTF8;
+                byte[] result = hash.ComputeHash(enc.GetBytes(password + salt));
+
+                foreach (byte b in result)
+                {
+                    //str += i + ": " + b.ToString() + "<br/>";
+
+                    str += b.ToString();
+                }
+                str += " " + hash.HashSize.ToString();
+            }
+            
+            return str2 ;
+        }
+        public static string SimpleHash(string password, string salt)
+        {
+            return FormsAuthentication.HashPasswordForStoringInConfigFile(password + salt, "SHA1");
         }
     }
     /// <summary>
@@ -68,6 +124,13 @@ namespace ChanceSpace
             else return new Guid();
         }
     }
+
+    public static class ParameterCol
+    {
+        public static List<SqlParameter> parameters = new List<SqlParameter>();
+        //public static void Add();
+    }
+    
 
 }
 

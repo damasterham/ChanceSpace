@@ -12,7 +12,7 @@ using System.Diagnostics;
 namespace ChanceSpace
 {    
     /// <summary>
-    /// SqlHandler Version 1.0.0.4
+    /// SqlHandler Version 1.0.0.5
     /// SqlHandler is a sql database query handler meant for an easy process of running sql commands.
     /// </summary>
     public class SqlHandler
@@ -54,6 +54,7 @@ namespace ChanceSpace
         public SqlConnection Conncetion { get { return this._connection; } set { this._connection = value; } }
         public SqlCommand Command { get { return this._command; } set { this._command = value; } }
         public SqlDataReader Reader { get { return this._reader; } set { this._reader = value; } }
+        public SqlParameterCollection Parameters { get { return this._command.Parameters; } private set { } }
         public string QueryString
         {
             get { return _command.CommandText; }
@@ -111,7 +112,7 @@ namespace ChanceSpace
             SqlDataAdapter adap = new SqlDataAdapter(_command);
             adap.Fill(dt);
             return dt;
-        }        
+        }
         /// <summary>
         /// Binds selected data to a GridView
         /// </summary>
