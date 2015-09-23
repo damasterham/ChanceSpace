@@ -12,7 +12,11 @@ using System.Diagnostics;
 namespace ChanceSpace
 {    
     /// <summary>
+<<<<<<< HEAD
     /// SqlHandler Version 1.0.2.0
+=======
+    /// SqlHandler Version 1.0.0.5
+>>>>>>> Laptop
     /// SqlHandler is a sql database query handler meant for an easy process of running sql commands.
     /// </summary>
     public class SqlHandler
@@ -69,9 +73,13 @@ namespace ChanceSpace
         /// Get or Set the SqlDataReader
         /// </summary>
         public SqlDataReader Reader { get { return this._reader; } set { this._reader = value; } }
+<<<<<<< HEAD
         /// <summary>
         /// Get the CommandText or Set the CommandText and CommandType to Text.
         /// </summary>
+=======
+        public SqlParameterCollection Parameters { get { return this._command.Parameters; } private set { } }
+>>>>>>> Laptop
         public string QueryString
         {
             get { return _command.CommandText; }
@@ -99,15 +107,17 @@ namespace ChanceSpace
         /// <summary>
         /// Executes A NonQuery, Create, Update, Delete.
         /// </summary>
-        public void ExecuteNonQuery()
+        public int ExecuteNonQuery()
         {
-            if (_open) _command.ExecuteNonQuery();
+            int rows = 0;
+            if (_open) rows = _command.ExecuteNonQuery();
             else
             {
                 _connection.Open();
-                _command.ExecuteNonQuery();
+                rows = _command.ExecuteNonQuery();
                 _connection.Close();
             }
+            return rows;
         }
         /// <summary>
         /// Executes a reader Stored in the Reader Property. Needs an open connection to function. Use Open() to open the connection and Close() to close it when you are done using the Reader Property.
@@ -124,6 +134,7 @@ namespace ChanceSpace
             adap.Fill(dt);
             return dt;
         }
+<<<<<<< HEAD
         //public DataTable DataTable(DataTable newDt)
         //{
         //    DataTable dt = newDt;
@@ -131,6 +142,15 @@ namespace ChanceSpace
         //    adap.Fill(dt);
         //    return dt;
         //}        
+=======
+        public DataTable DataTable(DataTable newDt)
+        {
+            DataTable dt = newDt;
+            SqlDataAdapter adap = new SqlDataAdapter(_command);
+            adap.Fill(dt);
+            return dt;
+        }
+>>>>>>> Laptop
         /// <summary>
         /// Binds selected data to a GridView
         /// </summary>
@@ -160,12 +180,15 @@ namespace ChanceSpace
 
         #region Parameters
         #region Generic Add Methods
+<<<<<<< HEAD
         /// <summary>
         /// Adds a Parameter to Commands SqlParameterCollection
         /// </summary>
         /// <param name="value">The value of the parameter</param>
         /// <param name="parameterName">The name of the parameter</param>
         /// <param name="sqlDbType">The SqlDbType of the parameter</param>
+=======
+>>>>>>> Laptop
         public void AddParameter(object value, string parameterName, SqlDbType sqlDbType)
         {
             SqlParameter para = new SqlParameter();
@@ -175,35 +198,21 @@ namespace ChanceSpace
             para.SqlDbType = sqlDbType;
             _command.Parameters.Add(para);
         }
+<<<<<<< HEAD
         /// <summary>
         /// Adds a Parameter to Commands SqlParameterCollection
         /// </summary>
         /// <param name="value">The value of the parameter</param>
         /// <param name="parameterName">The name of the parameter</param>
         /// <param name="sqlDbType">The string name of a SqlDbType of the parameter</param>
+=======
+>>>>>>> Laptop
         public void AddParameter(object value, string parameterName, string sqlDbType)
         {
-                SqlDbType dataType = SqlDbType.Int;
-                switch (sqlDbType)
-                {
-                    case "int":
-                        dataType = SqlDbType.Int;
-                        break;
-                    case "nvarchar":
-                        dataType = SqlDbType.NVarChar;
-                        break;
-                    case "ntext":
-                        dataType = SqlDbType.NText;
-                        break;
-                    case "datetime":
-                        dataType = SqlDbType.DateTime;
-                        break;
-                    case "bit":
-                        dataType = SqlDbType.Bit;
-                        break;
-                }
-                AddParameter(value, parameterName, dataType);
+            SqlDbType dataType = SetDataType(sqlDbType);
+            AddParameter(value, parameterName, dataType);
         }
+<<<<<<< HEAD
         /// <summary>
         /// Adds a Parameter to Commands SqlParameterCollection
         /// </summary>
@@ -211,16 +220,18 @@ namespace ChanceSpace
         /// <param name="parameterName">The name of the parameter</param>
         /// <param name="sqlDbType">The SqlDbType of the parameter</param>
         /// <param name="length">The length of the parameter</param>
+=======
+>>>>>>> Laptop
         public void AddParameter(object value, string parameterName, SqlDbType sqlDbType, int length)
         {
             SqlParameter para = new SqlParameter();
             para.Value = value;
-            if (parameterName.Substring(0, 1) == "@") para.ParameterName = parameterName;
-            else para.ParameterName = "@" + parameterName;
+            para.ParameterName = ParameterSubstring(parameterName);
             para.SqlDbType = sqlDbType;
             para.Size = length;
             _command.Parameters.Add(para);
         }
+<<<<<<< HEAD
         /// <summary>
         /// Adds a Parameter to Commands SqlParameterCollection
         /// </summary>
@@ -230,27 +241,50 @@ namespace ChanceSpace
         /// <param name="length">The length of the parameter</param>
 
         public void AddParameter(object value, string parameterName, string sqlDbType, int length)
+=======
+        public void AddParameter(object value, string parameterName, string sqlDbType, int length)
         {
-                SqlDbType dataType = SqlDbType.Int;
-                switch (sqlDbType)
-                {
-                    case "int":
-                        dataType = SqlDbType.Int;
-                        break;
-                    case "nvarchar":
-                        dataType = SqlDbType.NVarChar;
-                        break;
-                    case "ntext":
-                        dataType = SqlDbType.NText;
-                        break;
-                    case "datetime":
-                        dataType = SqlDbType.DateTime;
-                        break;
-                    case "bit":
-                        dataType = SqlDbType.Bit;
-                        break;
-                }
-                AddParameter(value, parameterName, dataType, length);
+            SqlDbType dataType = SetDataType(sqlDbType);
+            AddParameter(value, parameterName, dataType, length);
+        }
+
+        private SqlDbType SetDataType(string sqlDbType)
+        {
+            SqlDbType dataType = SqlDbType.Int;
+            switch (sqlDbType)
+            {
+                case "int":
+                    dataType = SqlDbType.Int;
+                    break;
+                case "nvarchar":
+                    dataType = SqlDbType.NVarChar;
+                    break;
+                case "ntext":
+                    dataType = SqlDbType.NText;
+                    break;
+                case "datetime":
+                    dataType = SqlDbType.DateTime;
+                    break;
+                case "bit":
+                    dataType = SqlDbType.Bit;
+                    break;
+                case "varchar":
+                    dataType = SqlDbType.VarChar;
+                    break;
+                case "text":
+                    dataType = SqlDbType.Text;
+                    break;
+                case "guid":
+                    dataType = SqlDbType.UniqueIdentifier;
+                    break;
+            }
+            return dataType;
+        }
+        private string ParameterSubstring(string parameterName)
+>>>>>>> Laptop
+        {
+            if (parameterName.Substring(0, 1) == "@") return parameterName;
+            else return "@" + parameterName;
         }
         #endregion _Generic Add Methods_
         #region Custom Add Methods

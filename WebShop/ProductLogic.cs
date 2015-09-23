@@ -19,7 +19,10 @@ namespace ChanceSpace.WebShop
         #endregion _Fields_
 
         #region Constructors
-        public Product() { }
+        
+        public Product() {
+          
+        }
         /// <summary>
         /// Default cart constructor
         /// </summary>
