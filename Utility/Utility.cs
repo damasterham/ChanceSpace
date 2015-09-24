@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using System.Web.Security;
 using System.Collections;
 using System.Data.SqlClient;
+using System.Web.UI.WebControls;
 
 
 
@@ -19,6 +20,7 @@ namespace ChanceSpace
     /// </summary>
     public static class Utility
     {
+        #region PageHandling
         /// <summary>
         ///Reloads the page. Redirects you to the RawUrl of the current page.
         /// </summary>
@@ -31,6 +33,22 @@ namespace ChanceSpace
         {
             HttpContext.Current.Response.Redirect(HttpContext.Current.Request.RawUrl);
         }
+        public static string GetPageName()
+        {
+            return HttpContext.Current.Request.Url.ToString().Split('/').Last();
+        }
+
+        public void CurrentPageCss(List<HyperLink> hyperLinks, string currentPageString, string currentClass = "current")
+        {
+            foreach (HyperLink link in hyperLinks)
+            {
+                if (link.NavigateUrl == currentPageString) link.CssClass = currentClass;
+            }
+        }
+
+        #endregion _PageHandling_
+
+        #region TextHandling
         public static string TextEndRemoval(string text, int stepsBackInText, int deleteCount)
         {
             return text.Remove(text.Length - stepsBackInText, deleteCount);
@@ -46,6 +64,10 @@ namespace ChanceSpace
             }
             return str;
         }
+        #endregion _TextHandling_ 
+
+
+        #region SecurityHandling
         public static string NewSimpleSalt()
         {
             return Guid.NewGuid().ToString();
@@ -78,6 +100,8 @@ namespace ChanceSpace
             return FormsAuthentication.HashPasswordForStoringInConfigFile(password + salt, "SHA1");
         }
     }
+    #endregion _SecurityHandling_
+
     /// <summary>
     /// A static Class used to check database readers to see if they contain Null and return a apropriate defualt value to a given type
     /// </summary>
